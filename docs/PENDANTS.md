@@ -7,8 +7,8 @@
 
 ## Abiertos
 
-- [ ] (2026-09-30) Enviar a YPF el mapa Modbus del equipo y el listado de alarmas (provistos por Ingeniería) para que elijan tópicos/KPIs y alarmas -- envío previsto para el 2026-10-01.
-- [ ] (2026-09-30) Recibir de YPF la selección de tópicos y alarmas y cargarla en las tablas de whitelist -- depende del punto anterior.
+- [ ] (2026-09-30) Enviar a YPF el mapa Modbus del equipo y el listado de alarmas (provistos por Ingeniería) para que elijan tópicos/KPIs y alarmas -- se envía el 2026-09-30.
+- [ ] (2026-09-30) Recibir de YPF la selección de tópicos y alarmas y cargarla en las tablas de whitelist -- depende del punto anterior. No bloquea el desarrollo (acordado 2026-09-30).
 - [ ] (2026-09-30) Definir con YPF los límites del histórico: ventana máxima por request, granularidad (crudo o agregado), paginación y retención disponible -- quedó para la reunión con YPF.
 - [ ] (2026-09-30) Obtener los rangos IP de salida de YPF (sandbox y prod) para la allowlist.
 - [ ] (2026-09-30) Mapear en Aurora las tablas y columnas de origen de cada recurso (live, histórico, alarmas, desarenado, totalizadores).
@@ -19,6 +19,10 @@
 - [ ] (2026-09-30) Definir los valores concretos de rate limiting / throttling (rps y ráfaga) según la frecuencia de consulta que espera YPF.
 - [ ] (2026-09-30) Definir los dominios (sandbox y prod) y dónde viven las tablas de configuración de la API.
 - [ ] (2026-09-30) Definir tooling del repo (ORM/driver, lint, tests, CI/CD) al crear el primer código, y actualizar `CLAUDE.md`.
+- [ ] (2026-09-30) Acordar con YPF la fecha de disponibilidad del sandbox (credenciales + Swagger), para que el equipo RTIC integre antes de la prueba funcional del 2026-10-23.
+- [ ] (2026-09-30) Coordinar con YPF (Jorge, Rodrigo) la prueba de conexión y la validación de puertos: la API solo expone HTTPS por el 443.
+- [ ] (2026-09-30) Acceso a cámaras de los equipos: fuera del alcance de esta API. Santiago consulta con Motomecánica; registrar el resultado.
+- [ ] (2026-09-30) Confirmar la fecha de inicio que figura en la minuta anterior ("23 de septiembre"), que no coincide con el inicio de desarrollo del 2026-10-01.
 
 ## Resueltos
 

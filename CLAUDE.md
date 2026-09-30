@@ -1,4 +1,4 @@
-# CLAUDE.md -- YPF API (API de consumo de datos de desagregadores)
+# CLAUDE.md -- YPF API (API de consumo de datos de desarenadores)
 
 > Documento de contexto para agentes de IA. Se mantiene actualizado a medida
 > que el proyecto evoluciona -- no es una foto fija del día en que se creó.
@@ -6,8 +6,9 @@
 ## Resumen
 
 API REST de **consumo (pull)** que Digito expone a **YPF** para que sus
-sistemas lean los datos de los equipos desagregadores. Digito **no emite**
-datos hacia YPF: YPF consulta la API cuando lo necesita. Cubre:
+sistemas lean los datos de los equipos desarenadores. Digito **no emite**
+datos hacia YPF: YPF consulta la API cuando lo necesita. El consumidor es el
+equipo **RTIC** de YPF (sala de operación remota). Cubre:
 
 - **Dato en vivo**: el último valor emitido por el equipo en cada tópico.
 - **Histórico**: serie temporal de cada tópico.
@@ -21,7 +22,10 @@ elige. La selección se guarda en tablas de configuración (whitelist, ver
 
 **Estado:** repositorio recién creado (2026-09-30), todavía **sin código**.
 Todo lo de abajo es el diseño acordado; se actualiza a medida que se implementa.
-El desarrollo empieza el 2026-10-01 y la **entrega a YPF es el 2026-10-23**.
+El desarrollo empieza el 2026-10-01 y el objetivo es una **prueba funcional con YPF el 2026-10-23**.
+
+**Fuera de alcance:** accionamiento remoto (la API solo adquiere datos, nunca ejecuta
+acciones sobre los equipos) y acceso a cámaras (depende de Motomecánica).
 
 ## Stack tecnológico
 
@@ -46,6 +50,7 @@ ypf-api/
 ├── CLAUDE.md              # este archivo
 ├── docs/                  # toda la documentación .md (ver "Mantenimiento")
 │   ├── API-DESIGN.md      # endpoints, seguridad, documentación (material para YPF)
+│   ├── MINUTAS.md         # minutas de reuniones con YPF
 │   ├── HISTORY.md
 │   ├── DECISIONS.md
 │   └── PENDANTS.md
@@ -139,6 +144,8 @@ Nombres tentativos; ajustar al implementar. Los secretos van en AWS Secrets Mana
 ## Documentación relacionada
 
 - Diseño de la API, seguridad y documentación (material para YPF): [`docs/API-DESIGN.md`](docs/API-DESIGN.md)
+- Minutas de reuniones con YPF: [`docs/MINUTAS.md`](docs/MINUTAS.md)
+- Temario de la reunión del 2026-09-30 (artifact): https://claude.ai/artifact/6DYk4vtyypcyad7fBgCvRJ
 - Historial de sesiones: [`docs/HISTORY.md`](docs/HISTORY.md)
 - Decisiones técnicas: [`docs/DECISIONS.md`](docs/DECISIONS.md)
 - Pendientes: [`docs/PENDANTS.md`](docs/PENDANTS.md)

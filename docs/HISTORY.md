@@ -18,6 +18,12 @@ Formato de cada entrada:
 
 ## 2026-09-30 -- Definición inicial del proyecto y documentación de contexto
 
-- Se relevó el requerimiento de YPF: API pull de datos de desagregadores (live, histórico, alarmas, desarenado, totalizadores), con whitelist de tópicos y alarmas definida por YPF.
+- Se relevó el requerimiento de YPF: API pull de datos de desarenadores (live, histórico, alarmas, desarenado, totalizadores), con whitelist de tópicos y alarmas definida por YPF.
 - Se definieron stack, arquitectura, modelo de seguridad y estrategia de documentación (ver `docs/DECISIONS.md`).
 - Se generaron `CLAUDE.md`, `docs/API-DESIGN.md`, `docs/HISTORY.md`, `docs/DECISIONS.md` y `docs/PENDANTS.md`. El repo todavía no tiene código.
+
+## 2026-09-30 -- Minuta anterior y temario de la reunión de detalle
+
+- Se registró la minuta de la reunión inicial con YPF en `docs/MINUTAS.md`.
+- Se armó el temario de la reunión del 2026-09-30 como artifact: https://claude.ai/artifact/6DYk4vtyypcyad7fBgCvRJ
+- Se unificó el término a "desarenadores" (como en la minuta), se sumaron a `CLAUDE.md` el consumidor (equipo RTIC) y lo que queda fuera de alcance (accionamiento remoto, cámaras), y se agregaron pendientes nuevos.
