@@ -28,4 +28,4 @@
 
 ## 2026-09-30 -- Reunión de detalle
 
-Temario preparado: https://claude.ai/artifact/6DYk4vtyypcyad7fBgCvRJ (estado de tareas, tiempos, seguridad, documentación y temas a definir). *Completar con las definiciones que salgan de la reunión.*
+Temario preparado: https://claude.ai/artifact/6DYk4vtyypcyad7fBgCvRJ (estado de tareas, tiempos, seguridad, documentación y temas a definir). Reunión realizada. Las preguntas del temario (IPs de salida, límites del histórico, frecuencia de consulta, credenciales, fechas/unidades, fecha del sandbox) **no se respondieron en la reunión**: YPF las responde por mail. Por mail se envían también el temario, el mapa Modbus y el detalle de alarmas.

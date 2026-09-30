@@ -27,3 +27,8 @@ Formato de cada entrada:
 - Se registró la minuta de la reunión inicial con YPF en `docs/MINUTAS.md`.
 - Se armó el temario de la reunión del 2026-09-30 como artifact: https://claude.ai/artifact/6DYk4vtyypcyad7fBgCvRJ
 - Se unificó el término a "desarenadores" (como en la minuta), se sumaron a `CLAUDE.md` el consumidor (equipo RTIC) y lo que queda fuera de alcance (accionamiento remoto, cámaras), y se agregaron pendientes nuevos.
+
+## 2026-09-30 -- Post reunión de detalle
+
+- Ajustes al temario a partir de comentarios: recurso raíz `/v1/services`, ruta de desarenado `…/wells/{pozo}/dumps`, documentación como "diseño previo, a confirmar". Estos cambios **todavía no se pasaron** a `docs/API-DESIGN.md` (ver pendientes).
+- Se redactó el mail a YPF con el temario, el mapa Modbus, el detalle de alarmas y las preguntas abiertas.

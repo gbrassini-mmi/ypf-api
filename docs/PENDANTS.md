@@ -23,6 +23,8 @@
 - [ ] (2026-09-30) Coordinar con YPF (Jorge, Rodrigo) la prueba de conexión y la validación de puertos: la API solo expone HTTPS por el 443.
 - [ ] (2026-09-30) Acceso a cámaras de los equipos: fuera del alcance de esta API. Santiago consulta con Motomecánica; registrar el resultado.
 - [ ] (2026-09-30) Confirmar la fecha de inicio que figura en la minuta anterior ("23 de septiembre"), que no coincide con el inicio de desarrollo del 2026-10-01.
+- [ ] (2026-09-30) Confirmar si `services` pasa a ser el recurso raíz de la API y si el desarenado se expone como `dumps` (así quedó en el temario), y actualizar `docs/API-DESIGN.md` y `CLAUDE.md`.
+- [ ] (2026-09-30) Esperar la respuesta de YPF por mail a las preguntas del temario (no se respondieron en la reunión).
 
 ## Resueltos
 
