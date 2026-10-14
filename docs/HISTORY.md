@@ -42,3 +42,8 @@ Formato de cada entrada:
 ## 2026-10-14 -- Revisión del pliego técnico de YPF
 
 - Se revisó la disponibilidad de datos que pide el pliego técnico de desarenado (CPP N° 10925-26; p. 14 y menciones en pp. 6–7, 15, 18) contra el alcance de la API. Las brechas quedaron en `docs/PENDANTS.md`.
+
+## 2026-10-14 -- Cierre de la reunión de seguimiento
+
+- Se pasaron a `docs/MINUTAS.md` las notas tomadas en el temario durante la reunión, y se actualizaron los pendientes.
+- Se redactó el mail a YPF con la minuta, el temario y la referencia de la API.

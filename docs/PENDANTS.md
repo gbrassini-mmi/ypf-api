@@ -27,16 +27,19 @@
 - [ ] (2026-10-14) La referencia v1 no incluye alarmas (activas/históricas) ni totalizadores, que están en el alcance original: confirmar estado.
 - [ ] (2026-10-14) Sincronizar `CLAUDE.md`, `docs/API-DESIGN.md` y `docs/DECISIONS.md` con la implementación real que describe `docs/referencia-api-v1.html`: equipos por `serial`, visibilidad por cuentas/subcuentas con servicio activo (no la tabla `api_client_equipment`), `403` (no `404`) para equipos no visibles, scope `msuite/read` y permiso `DEVICE_READ`, rutas `well/{n}` vs `wells/{n,...}`, histórico paginado por página.
 
-- [ ] (2026-10-14) Pliego técnico YPF (CPP N° 10925-26, p. 14) pide "historización de todas las variables" y que "estén también en el sistema de telemetría de YPF". El diseño expone solo las que YPF selecciona: pedir a YPF confirmación por escrito de que el subconjunto es decisión suya y dejar claro que cualquier variable se habilita sin desarrollo.
 - [ ] (2026-10-14) Pliego p. 18: las horas standby se validan con la telemetría de YPF (fin de STB = puesta en marcha). Asegurar que la selección de YPF incluya una variable de estado operativo / puesta en marcha.
 - [ ] (2026-10-14) Pliego p. 14: medición continua de eficiencia del desarenador y cuantificación de arena. Verificar qué variable o cálculo lo representa (los desarenados ya exponen `drainWeight`, crudo en libras × 10).
 - [ ] (2026-10-14) Pliego p. 14 y pp. 6–7: cierre remoto de pozo y purga a distancia "desde sala de control". Confirmar que se refiere a la sala de control del contratista y no a la de YPF: la API es solo lectura.
 - [ ] (2026-10-14) Pliego p. 15: videocámara con grabación continua, "la difusión queda bajo responsabilidad de YPF". Sumar este punto al pendiente de cámaras (Santiago).
+- [ ] (2026-10-14) Entregar la URL productiva junto con el sandbox (2026-10-21). YPF informa sus IPs de salida después de recibir las URLs.
+- [ ] (2026-10-14) YPF pide en principio la totalidad de variables y alarmas: revisar si la whitelist sigue haciendo falta o queda como mecanismo para excluir.
+- [ ] (2026-10-14) Cámaras: YPF lo marca como relevante y pide definiciones en breve (Santiago).
 
 ## Resueltos
 
 <!-- - [x] (YYYY-MM-DD abierto → YYYY-MM-DD resuelto) Descripción -- cómo se resolvió -->
 
+- [x] (2026-10-14 abierto → 2026-10-14 resuelto) Pliego técnico YPF (CPP N° 10925-26, p. 14) pide "historización de todas las variables" y que "estén también en el sistema de telemetría de YPF". El diseño expone solo las que YPF selecciona: pedir a YPF confirmación por escrito de que el subconjunto es decisión suya y dejar claro que cualquier variable se habilita sin desarrollo. -- en la reunión YPF indicó que en principio quiere la totalidad de variables y alarmas.
 - [x] (2026-09-30 abierto → 2026-10-14 resuelto) Enviar a YPF el mapa Modbus del equipo y el listado de alarmas (provistos por Ingeniería) para que elijan tópicos/KPIs y alarmas -- se envía el 2026-09-30. -- enviado el 2026-09-30.
 - [x] (2026-09-30 abierto → 2026-10-14 resuelto) Confirmar con YPF la zona horaria y el formato de fechas (propuesta: ISO-8601 UTC) y las unidades de cada tópico. -- la referencia v1 usa ISO 8601 en UTC. Las unidades siguen pendientes (el live devuelve valor crudo sin unidad).
 - [x] (2026-09-30 abierto → 2026-10-14 resuelto) Acordar con YPF la fecha de disponibilidad del sandbox (credenciales + Swagger), para que el equipo RTIC integre antes de la prueba funcional del 2026-10-23. -- sandbox el miércoles 2026-10-21.

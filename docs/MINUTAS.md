@@ -42,3 +42,12 @@ Temario: https://claude.ai/artifact/UGzmtE5ieRrVbVeXph5EYd
 - Cámaras: sigue a cargo de Santiago; ya se comunicó a los responsables del acceso.
 
 **YPF debe:** IPs de salida, frecuencia esperada de consumo, entrega y rotación de credenciales (las tres antes del 2026-10-21), selección final de variables y alarmas, comentarios de ciberseguridad.
+
+**Resultado de la reunión (notas tomadas en el temario):**
+- Variables y alarmas: en principio YPF quiere **la totalidad** (no un subconjunto). Esto cierra la diferencia con el pliego (p. 14).
+- Eficiencia del desarenador / totalizadores: sin comentarios de YPF.
+- Junto con el sandbox (2026-10-21) se entrega también la **URL productiva**, para que YPF gestione los accesos de su lado.
+- IPs de salida: YPF las informa una vez que reciba las URLs de nuestro servicio.
+- Entrega y rotación de credenciales: a confirmar por YPF.
+- Frecuencia esperada de consumo: sigue pendiente.
+- Cámaras: el tema se vuelve relevante para YPF; se necesitan definiciones en breve.
