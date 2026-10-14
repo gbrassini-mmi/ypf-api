@@ -29,3 +29,16 @@
 ## 2026-09-30 -- Reunión de detalle
 
 Temario preparado: https://claude.ai/artifact/6DYk4vtyypcyad7fBgCvRJ (estado de tareas, tiempos, seguridad, documentación y temas a definir). Reunión realizada. Las preguntas del temario (IPs de salida, límites del histórico, frecuencia de consulta, credenciales, fechas/unidades, fecha del sandbox) **no se respondieron en la reunión**: YPF las responde por mail. Por mail se envían también el temario, el mapa Modbus y el detalle de alarmas.
+
+## 2026-10-14 -- Reunión de seguimiento
+
+Temario: https://claude.ai/artifact/UGzmtE5ieRrVbVeXph5EYd
+
+**Estado al inicio de la reunión:**
+- Listado de variables, alarmas y alertas: enviado a YPF el 2026-09-30. Falta la selección final de YPF. No bloquea, pero se necesita pronto para cerrar el desarrollo.
+- Documentación de la API: se presenta y comparte hoy en formato documento (`docs/referencia-api-v1.html`). El Swagger se entrega con el sandbox.
+- Ciberseguridad: documentación de seguridad e instrucciones de conexión enviadas el 2026-10-07. Esperando comentarios de YPF; si hay dudas, reunión con los desarrolladores.
+- Sandbox: disponible el miércoles 2026-10-21.
+- Cámaras: sigue a cargo de Santiago; ya se comunicó a los responsables del acceso.
+
+**YPF debe:** IPs de salida, frecuencia esperada de consumo, entrega y rotación de credenciales (las tres antes del 2026-10-21), selección final de variables y alarmas, comentarios de ciberseguridad.

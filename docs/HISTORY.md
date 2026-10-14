@@ -32,3 +32,9 @@ Formato de cada entrada:
 
 - Ajustes al temario a partir de comentarios: recurso raíz `/v1/services`, ruta de desarenado `…/wells/{pozo}/dumps`, documentación como "diseño previo, a confirmar". Estos cambios **todavía no se pasaron** a `docs/API-DESIGN.md` (ver pendientes).
 - Se redactó el mail a YPF con el temario, el mapa Modbus, el detalle de alarmas y las preguntas abiertas.
+
+## 2026-10-14 -- Reunión de seguimiento con YPF
+
+- Se armó el temario de la reunión del 2026-10-14: https://claude.ai/artifact/UGzmtE5ieRrVbVeXph5EYd
+- Se guardó la referencia v1 de la API que se comparte con YPF en `docs/referencia-api-v1.html`.
+- Se registró la reunión en `docs/MINUTAS.md` y se actualizaron los pendientes: resueltos los que ya se cerraron, agregados los que debe YPF y las diferencias entre el diseño documentado y la implementación.

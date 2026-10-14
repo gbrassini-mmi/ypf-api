@@ -1,0 +1,712 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>ypf-api · Referencia v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky index column on the left, endpoint reference on the right; stacks on phones. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --sunken: #eef1f3;
+  --fg: #1b2228;
+  --muted: #5b6770;
+  --line: #d9dfe3;
+  --accent: #0f6e78;
+  --accent-soft: #e0f0f1;
+  --get: #1f5fae;
+  --get-soft: #e3edf9;
+  --ok: #2f7d4a;
+  --ok-soft: #e2f2e7;
+  --plan: #9a6a12;
+  --plan-soft: #f7eed9;
+  --err: #a33a2c;
+  --code-bg: #1d2429;
+  --code-fg: #e4e9ec;
+  --code-key: #8ccfd6;
+  --code-str: #e8c27d;
+  --code-num: #b6d98f;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12171b; --surface: #192026; --sunken: #20292f; --fg: #e3e8eb; --muted: #97a3ab;
+    --line: #2c363d; --accent: #5fbfc8; --accent-soft: #173539; --get: #7fb0ea; --get-soft: #1b2b40;
+    --ok: #7cc795; --ok-soft: #183324; --plan: #e0b45e; --plan-soft: #362b14; --err: #e98a7c;
+    --code-bg: #0c1013; --code-fg: #dfe5e8; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12171b; --surface: #192026; --sunken: #20292f; --fg: #e3e8eb; --muted: #97a3ab;
+  --line: #2c363d; --accent: #5fbfc8; --accent-soft: #173539; --get: #7fb0ea; --get-soft: #1b2b40;
+  --ok: #7cc795; --ok-soft: #183324; --plan: #e0b45e; --plan-soft: #362b14; --err: #e98a7c;
+  --code-bg: #0c1013; --code-fg: #dfe5e8; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.6 var(--font-body); }
+a { color: var(--accent); }
+code { font-family: var(--font-mono); font-size: 0.86em; background: var(--sunken); padding: 0.1em 0.35em; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.2; margin: 0; }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 64px; display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 40px; }
+@media (max-width: 860px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-inline: 16px; } .toc { position: static !important; } }
+
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; font-size: 13.5px; display: grid; gap: 18px; }
+.toc h4 { font: 600 11px/1 var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 8px; }
+.toc ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.toc a { display: flex; gap: 8px; align-items: baseline; text-decoration: none; color: var(--fg); padding: 4px 8px; border-radius: 6px; min-width: 0; }
+.toc a:hover, .toc a:focus-visible { background: var(--sunken); outline: none; }
+.toc a span.p { font-family: var(--font-mono); font-size: 12px; overflow-wrap: anywhere; }
+.toc a.planned span.p { color: var(--muted); }
+.dot { width: 7px; height: 7px; border-radius: 50%; flex: none; transform: translateY(-1px); }
+.dot.ok { background: var(--ok); } .dot.plan { background: var(--plan); }
+
+main { display: grid; gap: 40px; min-width: 0; }
+header.hero { display: grid; gap: 14px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.eyebrow { font: 600 11.5px/1 var(--font-body); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+header.hero h1 { font-size: clamp(28px, 4vw, 38px); font-weight: 700; }
+header.hero p { margin: 0; max-width: 68ch; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); }
+.meta b { color: var(--fg); font-weight: 600; }
+
+section.block { display: grid; gap: 16px; min-width: 0; }
+section.block > h2 { font-size: 22px; font-weight: 600; }
+section.block > p { margin: 0; max-width: 72ch; }
+.lede { color: var(--muted); }
+
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.rule { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.rule h3 { font-size: 14.5px; font-weight: 600; }
+.rule p { margin: 0; font-size: 14px; color: var(--muted); }
+
+.method { font: 600 12px/1 var(--font-mono); letter-spacing: 0.04em; color: var(--surface); background: var(--get); padding: 6px 9px; border-radius: 5px; flex: none; }
+.status { font: 600 11px/1 var(--font-body); text-transform: uppercase; letter-spacing: 0.07em; padding: 5px 8px; border-radius: 99px; flex: none; }
+.status.ok { color: var(--ok); background: var(--ok-soft); }
+.status.plan { color: var(--plan); background: var(--plan-soft); }
+
+details.ep { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--get); border-radius: 10px; min-width: 0; scroll-margin-top: 16px; }
+details.ep > summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px 16px; background: var(--get-soft); border-radius: 6px 6px 0 0; }
+details.ep:not([open]) > summary { border-radius: 6px; }
+details.ep > summary::-webkit-details-marker { display: none; }
+details.ep > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.path { font: 500 14.5px/1.35 var(--font-mono); overflow-wrap: anywhere; min-width: 0; flex: 1 1 260px; }
+.path i { font-style: normal; color: var(--accent); }
+.sum { flex: 1 1 100%; color: var(--muted); font-size: 14px; margin: 0; }
+.chev { margin-left: auto; color: var(--muted); transition: transform .15s; font-size: 12px; }
+details[open] .chev { transform: rotate(180deg); }
+.body { padding: 18px 16px 20px; display: grid; gap: 20px; min-width: 0; }
+.body h3 { font: 600 11.5px/1 var(--font-body); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+.body p { margin: 0; max-width: 72ch; }
+.body ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; max-width: 72ch; }
+
+.callout { background: var(--accent-soft); border-radius: 8px; padding: 12px 14px; display: grid; gap: 4px; }
+.callout strong { font-family: var(--font-display); font-weight: 600; color: var(--accent); font-size: 14px; }
+.callout p { font-size: 14.5px; }
+.callout.warn { background: var(--plan-soft); }
+.callout.warn strong { color: var(--plan); }
+
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+th { font-weight: 600; font-size: 12px; color: var(--muted); background: var(--sunken); text-transform: uppercase; letter-spacing: 0.05em; }
+td.c { font-family: var(--font-mono); font-size: 12.5px; white-space: nowrap; }
+.code-2xx { color: var(--ok); font-weight: 600; } .code-4xx, .code-5xx { color: var(--err); font-weight: 600; }
+
+.code { position: relative; background: var(--code-bg); color: var(--code-fg); border-radius: 8px; min-width: 0; }
+.code .bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid #ffffff14; font: 500 11.5px/1 var(--font-body); color: #9fb0b8; text-transform: uppercase; letter-spacing: 0.07em; }
+.code pre { margin: 0; padding: 12px 14px; overflow-x: auto; font: 12.8px/1.55 var(--font-mono); tab-size: 2; }
+.copy { font: 500 11.5px/1 var(--font-body); color: #cfdade; background: #ffffff12; border: 1px solid #ffffff22; border-radius: 5px; padding: 5px 9px; cursor: pointer; text-transform: none; letter-spacing: 0; }
+.copy:hover { background: #ffffff22; } .copy:focus-visible { outline: 2px solid var(--code-key); }
+.k { color: var(--code-key); } .s { color: var(--code-str); } .n { color: var(--code-num); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; min-width: 0; }
+
+details.ep.planned { border-left-color: var(--plan); }
+details.ep.planned > summary { background: var(--sunken); }
+details.ep.planned .method { background: var(--muted); }
+
+footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 20px; }
+@media (prefers-reduced-motion: reduce) { .chev { transition: none; } }
+</style>
+
+<div class="wrap">
+  <nav class="toc" aria-label="Índice">
+    <div>
+      <h4>Introducción</h4>
+      <ul>
+        <li><a href="#autenticacion"><span>Autenticación</span></a></li>
+        <li><a href="#visibilidad"><span>Qué equipos ve cada token</span></a></li>
+        <li><a href="#errores"><span>Errores comunes</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Endpoints</h4>
+      <ul>
+        <li><a href="#ep-list"><span class="dot ok"></span><span class="p">/v1/equipment</span></a></li>
+        <li><a href="#ep-detail"><span class="dot ok"></span><span class="p">/{serial}</span></a></li>
+        <li><a href="#ep-live"><span class="dot ok"></span><span class="p">/{serial}/live</span></a></li>
+        <li><a href="#ep-live-well"><span class="dot ok"></span><span class="p">/{serial}/live/{wellNumber}</span></a></li>
+        <li><a href="#ep-history"><span class="dot ok"></span><span class="p">/well/{wellNumber}/topics/{topicKey}/history</span></a></li>
+        <li><a href="#ep-sanding"><span class="dot ok"></span><span class="p">/wells/{wellNumbers}/sanding-events</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Conceptos</h4>
+      <ul>
+        <li><a href="#rangos"><span>Rangos contratados</span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <span class="eyebrow">Referencia de API · v1</span>
+      <h1>ypf-api</h1>
+      <p>Datos de los equipos de bombeo asignados a YPF: listado de equipos, pozos del servicio, último valor de cada tópico, histórico de un tópico y eventos de desarenado. Todas las rutas son de solo lectura, usan JSON y requieren un access token válido.</p>
+      <div class="meta">
+        <span>Versión <b>v1</b> (prefijo <code>/v1</code>)</span>
+        <span>Formato <b>application/json</b></span>
+        <span>Fechas <b>ISO 8601, UTC</b></span>
+        <span>URL base <b>se entrega con las credenciales</b></span>
+      </div>
+    </header>
+
+    <section class="block" id="autenticacion">
+      <h2>Autenticación</h2>
+      <p>La API no emite tokens. El consumidor pide un access token a Amazon Cognito con el flujo OAuth 2.0 <code>client_credentials</code> (máquina a máquina) y lo envía en cada request en el header <code>Authorization: Bearer &lt;access_token&gt;</code>. El <code>client_id</code> y el <code>client_secret</code> se entregan por canal seguro.</p>
+      <div class="two">
+        <div class="code">
+          <div class="bar"><span>1 · Obtener el token</span><button class="copy" type="button" id="copy-token">Copiar</button></div>
+<pre id="pre-copy-token">curl -X POST 'https://dcore.auth.us-east-1.amazoncognito.com/oauth2/token' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode 'grant_type=client_credentials' \
+  --data-urlencode 'client_id=&lt;CLIENT_ID&gt;' \
+  --data-urlencode 'client_secret=&lt;CLIENT_SECRET&gt;' \
+  --data-urlencode 'scope=msuite/read'</pre>
+        </div>
+        <div class="code">
+          <div class="bar"><span>Respuesta 200</span></div>
+<pre>{
+  <span class="k">"access_token"</span>: <span class="s">"eyJraWQiOiJ..."</span>,
+  <span class="k">"token_type"</span>: <span class="s">"Bearer"</span>,
+  <span class="k">"expires_in"</span>: <span class="n">3600</span>
+}</pre>
+        </div>
+      </div>
+      <div class="rules">
+        <div class="rule"><h3>Vigencia de 60 minutos</h3><p>Reusar el mismo token para todos los requests y renovarlo un poco antes de <code>expires_in</code>. No pedir un token por request.</p></div>
+        <div class="rule"><h3>Scope <code>msuite/read</code> obligatorio</h3><p>Es el único scope que se pide. Un scope mal escrito devuelve <code>400 invalid_scope</code> en Cognito, y un token sin <code>msuite/read</code> recibe <code>400</code> en cualquier ruta de la API.</p></div>
+        <div class="rule"><h3>El secret no viaja a la API</h3><p>Solo se usa contra el token endpoint. Guardarlo en un gestor de secretos, nunca en código, URLs ni logs.</p></div>
+      </div>
+    </section>
+
+    <section class="block" id="visibilidad">
+      <h2>Qué equipos ve cada token</h2>
+      <p>Cada token pertenece a una credencial asociada a una o más cuentas. En cada request la API resuelve esas cuentas (y sus subcuentas) y solo expone los equipos que tienen un <b>servicio activo hoy</b> en alguna de ellas.</p>
+      <div class="rules">
+        <div class="rule"><h3>Servicio activo</h3><p>Un equipo está asignado a una cuenta durante un período. Fuera de ese período, o si el servicio o el equipo fueron dados de baja, deja de aparecer.</p></div>
+        <div class="rule"><h3>Datos actuales: servicio activo hoy</h3><p>En el detalle y en <code>/live</code>, un equipo que no aparece en <code>GET /v1/equipment</code> devuelve <code>403</code>, aunque el serial exista.</p></div>
+        <div class="rule"><h3>Datos históricos: período contratado</h3><p>El histórico y los desarenados no exigen un servicio activo hoy: devuelven solo los tramos del rango pedido cubiertos por un servicio de las cuentas del token. Ver <a href="#rangos">rangos contratados</a>.</p></div>
+        <div class="rule"><h3>Permisos al instante</h3><p>Los permisos se consultan en cada request, sin caché: un cambio de asignación aplica en la llamada siguiente.</p></div>
+      </div>
+    </section>
+
+    <section class="block" id="errores">
+      <h2>Errores comunes</h2>
+      <p class="lede">Aplican a todas las rutas. Cada endpoint lista además sus propios casos.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>HTTP</th><th>Cuándo</th><th>Qué hacer</th></tr></thead>
+        <tbody>
+          <tr><td class="c code-4xx">400</td><td>El token no incluye el scope <code>msuite/read</code>. También parámetros inválidos, según cada endpoint.</td><td>Pedir el token con <code>scope=msuite/read</code>. Corregir el request; no reintentar igual.</td></tr>
+          <tr><td class="c code-4xx">401</td><td>Token ausente, mal formado, vencido, de otro emisor o que no es un access token.</td><td>Pedir un token nuevo y reintentar una sola vez.</td></tr>
+          <tr><td class="c code-4xx">403</td><td>La credencial no tiene el permiso <code>DEVICE_READ</code>, o el equipo pedido no está visible para el token.</td><td>No reintentar. Revisar asignaciones con el equipo de soporte.</td></tr>
+          <tr><td class="c code-5xx">503</td><td>El servicio de autorización (o, en desarenados, el de eventos) no está disponible. La API falla cerrada: nunca responde datos sin validar permisos.</td><td>Reintentar con backoff exponencial.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="block" id="disponibles">
+      <h2>Endpoints</h2>
+      <p class="lede">El equipo se identifica por su número de serie (<code>serial</code>). Todas las rutas requieren el permiso <code>DEVICE_READ</code>.</p>
+
+      <!-- GET /v1/equipment -->
+      <details class="ep" id="ep-list" open>
+        <summary>
+          <span class="method">GET</span>
+          <span class="path">/v1/equipment</span>
+                    <span class="chev" aria-hidden="true">▼</span>
+          <p class="sum">Equipos asignados a YPF con un servicio activo hoy.</p>
+        </summary>
+        <div class="body">
+          <div class="callout">
+            <strong>Alcance del token</strong>
+            <p>Devuelve <b>solo</b> los equipos con un servicio activo en alguna de las cuentas a las que tiene acceso el token enviado en <code>Authorization</code>. Dos credenciales distintas pueden ver listados distintos.</p>
+          </div>
+          <div>
+            <h3>Comportamiento</h3>
+            <ul>
+              <li>Un equipo aparece <b>una sola vez</b>, aunque esté activo en varias cuentas del token. Se informan las fechas de su servicio activo más antiguo.</li>
+              <li><code>endDate</code> es <code>null</code> mientras el servicio no tenga fecha de fin.</li>
+              <li>Si el token no tiene equipos visibles, la respuesta es <code>200</code> con una lista vacía.</li>
+              <li>Sin paginación ni filtros por ahora.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Respuestas</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>HTTP</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c code-2xx">200</td><td>Lista de equipos visibles (puede estar vacía).</td></tr>
+                <tr><td class="c code-4xx">401</td><td>Token ausente o inválido.</td></tr>
+                <tr><td class="c code-4xx">403</td><td>Falta el permiso <code>DEVICE_READ</code>.</td></tr>
+                <tr><td class="c code-5xx">503</td><td>Autorización no disponible.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="two">
+            <div class="code">
+              <div class="bar"><span>Request</span><button class="copy" type="button" id="copy-list">Copiar</button></div>
+<pre id="pre-copy-list">curl 'https://&lt;API_BASE_URL&gt;/v1/equipment' \
+  -H 'Authorization: Bearer &lt;ACCESS_TOKEN&gt;'</pre>
+            </div>
+            <div class="code">
+              <div class="bar"><span>Respuesta 200</span></div>
+<pre>{
+  <span class="k">"equipment"</span>: [
+    {
+      <span class="k">"serial"</span>: <span class="s">"020032"</span>,
+      <span class="k">"startDate"</span>: <span class="s">"2026-01-01T00:00:00.000Z"</span>,
+      <span class="k">"endDate"</span>: <span class="n">null</span>
+    }
+  ]
+}</pre>
+            </div>
+          </div>
+          <div>
+            <h3>Esquema · <code>EquipmentResponseDto</code></h3>
+            <div class="tbl"><table>
+              <thead><tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c">serial</td><td class="c">string</td><td>Número de serie del equipo. Es el identificador que usan las demás rutas.</td></tr>
+                <tr><td class="c">startDate</td><td class="c">string (date-time)</td><td>Inicio del servicio activo.</td></tr>
+                <tr><td class="c">endDate</td><td class="c">string | null</td><td>Fin del servicio, o <code>null</code> si no tiene fecha de fin.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- GET /v1/equipment/{serial} -->
+      <details class="ep" id="ep-detail" open>
+        <summary>
+          <span class="method">GET</span>
+          <span class="path">/v1/equipment/<i>{serial}</i></span>
+                    <span class="chev" aria-hidden="true">▼</span>
+          <p class="sum">Detalle del equipo: fechas de su servicio y pozos activos.</p>
+        </summary>
+        <div class="body">
+          <div class="callout">
+            <strong>Alcance del token</strong>
+            <p>Responde solo si el equipo está visible para el token (ver <a href="#visibilidad">visibilidad</a>). Un serial inexistente y uno de otra cuenta responden igual, <code>403</code>, para no revelar qué equipos existen.</p>
+          </div>
+          <div>
+            <h3>Comportamiento</h3>
+            <ul>
+              <li>Las fechas son las del mismo servicio que muestra el listado.</li>
+              <li><code>activeWells</code> son los pozos <b>asociados a ese servicio</b>, en orden ascendente, hayan reportado mediciones o no.</li>
+              <li>Esos números de pozo son los que aceptan <code>/live/{wellNumber}</code>, el histórico y los desarenados.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Parámetros</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Descripción</th></tr></thead>
+              <tbody><tr><td class="c">serial</td><td>path</td><td class="c">string</td><td>Obligatorio. No vacío, máximo 50 caracteres.</td></tr></tbody>
+            </table></div>
+          </div>
+          <div>
+            <h3>Respuestas</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>HTTP</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c code-2xx">200</td><td>Detalle del equipo.</td></tr>
+                <tr><td class="c code-4xx">400</td><td><code>serial</code> vacío o de más de 50 caracteres.</td></tr>
+                <tr><td class="c code-4xx">401</td><td>Token ausente o inválido.</td></tr>
+                <tr><td class="c code-4xx">403</td><td>Falta <code>DEVICE_READ</code>, o el equipo no está visible para el token (incluye seriales inexistentes).</td></tr>
+                <tr><td class="c code-5xx">503</td><td>Autorización no disponible.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="two">
+            <div class="code">
+              <div class="bar"><span>Request</span><button class="copy" type="button" id="copy-detail">Copiar</button></div>
+<pre id="pre-copy-detail">curl 'https://&lt;API_BASE_URL&gt;/v1/equipment/020032' \
+  -H 'Authorization: Bearer &lt;ACCESS_TOKEN&gt;'</pre>
+            </div>
+            <div class="code">
+              <div class="bar"><span>Respuesta 200</span></div>
+<pre>{
+  <span class="k">"serial"</span>: <span class="s">"020032"</span>,
+  <span class="k">"startDate"</span>: <span class="s">"2026-01-01T00:00:00.000Z"</span>,
+  <span class="k">"endDate"</span>: <span class="n">null</span>,
+  <span class="k">"activeWellCount"</span>: <span class="n">2</span>,
+  <span class="k">"activeWells"</span>: [<span class="n">1</span>, <span class="n">2</span>]
+}</pre>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- GET /v1/equipment/{serial}/live -->
+      <details class="ep" id="ep-live" open>
+        <summary>
+          <span class="method">GET</span>
+          <span class="path">/v1/equipment/<i>{serial}</i>/live</span>
+                    <span class="chev" aria-hidden="true">▼</span>
+          <p class="sum">Último valor reportado de cada tópico del equipo, agrupado por pozo.</p>
+        </summary>
+        <div class="body">
+          <div class="callout">
+            <strong>Alcance del token</strong>
+            <p>Misma regla que el detalle: si el equipo no está visible para el token, <code>403</code>.</p>
+          </div>
+          <div>
+            <h3>Comportamiento</h3>
+            <ul>
+              <li>Cada pozo trae un objeto <code>topics</code> indexado por clave de tópico (por ejemplo <code>ACT_TIME_PUMP</code>), con el último valor y su timestamp.</li>
+              <li>El pozo <code>0</code> contiene los tópicos del equipo (no de un pozo) y se devuelve como uno más.</li>
+              <li><code>timeStamp</code> es la última vez que se actualizó ese valor.</li>
+            </ul>
+          </div>
+          <div class="callout warn">
+            <strong>Diferencias con lo acordado</strong>
+            <p>Hoy se devuelven <b>todos</b> los tópicos con el <b>valor crudo</b> (sin multiplicador) y <b>sin unidad</b>. El filtro por tópicos habilitados y la unidad quedan pendientes.</p>
+          </div>
+          <div>
+            <h3>Respuestas</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>HTTP</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c code-2xx">200</td><td>Últimos valores por pozo.</td></tr>
+                <tr><td class="c code-4xx">400</td><td><code>serial</code> vacío o de más de 50 caracteres.</td></tr>
+                <tr><td class="c code-4xx">401</td><td>Token ausente o inválido.</td></tr>
+                <tr><td class="c code-4xx">403</td><td>Falta <code>DEVICE_READ</code>, o el equipo no está visible para el token.</td></tr>
+                <tr><td class="c code-5xx">503</td><td>Autorización no disponible.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="two">
+            <div class="code">
+              <div class="bar"><span>Request</span><button class="copy" type="button" id="copy-live">Copiar</button></div>
+<pre id="pre-copy-live">curl 'https://&lt;API_BASE_URL&gt;/v1/equipment/020032/live' \
+  -H 'Authorization: Bearer &lt;ACCESS_TOKEN&gt;'</pre>
+            </div>
+            <div class="code">
+              <div class="bar"><span>Respuesta 200</span></div>
+<pre>{
+  <span class="k">"serial"</span>: <span class="s">"020032"</span>,
+  <span class="k">"wells"</span>: [
+    {
+      <span class="k">"number"</span>: <span class="n">0</span>,
+      <span class="k">"topics"</span>: {
+        <span class="k">"ALTERNATIVE_USE"</span>: {
+          <span class="k">"value"</span>: <span class="n">3</span>,
+          <span class="k">"timeStamp"</span>: <span class="s">"2026-10-06T13:48:12.540Z"</span>
+        }
+      }
+    },
+    {
+      <span class="k">"number"</span>: <span class="n">1</span>,
+      <span class="k">"topics"</span>: {
+        <span class="k">"ACT_TIME_PUMP"</span>: {
+          <span class="k">"value"</span>: <span class="n">0</span>,
+          <span class="k">"timeStamp"</span>: <span class="s">"2026-10-06T13:48:12.540Z"</span>
+        }
+      }
+    }
+  ]
+}</pre>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- GET /v1/equipment/{serial}/live/{wellNumber} -->
+      <details class="ep" id="ep-live-well" open>
+        <summary>
+          <span class="method">GET</span>
+          <span class="path">/v1/equipment/<i>{serial}</i>/live/<i>{wellNumber}</i></span>
+                    <span class="chev" aria-hidden="true">▼</span>
+          <p class="sum">Último valor de cada tópico de un solo pozo del equipo.</p>
+        </summary>
+        <div class="body">
+          <div class="callout">
+            <strong>Alcance del token</strong>
+            <p>La visibilidad del equipo se valida primero: si el equipo no está visible, la respuesta es <code>403</code> aunque el pozo exista o no.</p>
+          </div>
+          <div>
+            <h3>Parámetros</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c">serial</td><td>path</td><td class="c">string</td><td>Obligatorio. No vacío, máximo 50 caracteres.</td></tr>
+                <tr><td class="c">wellNumber</td><td>path</td><td class="c">integer ≥ 0</td><td>Solo dígitos. <code>0</code> = tópicos del equipo. Valores como <code>1e2</code> o <code>0x10</code> se rechazan.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div>
+            <h3>Respuestas</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>HTTP</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c code-2xx">200</td><td>Últimos valores del pozo.</td></tr>
+                <tr><td class="c code-4xx">400</td><td><code>serial</code> inválido, o <code>wellNumber</code> no es un entero ≥ 0.</td></tr>
+                <tr><td class="c code-4xx">401</td><td>Token ausente o inválido.</td></tr>
+                <tr><td class="c code-4xx">403</td><td>Falta <code>DEVICE_READ</code>, o el equipo no está visible para el token.</td></tr>
+                <tr><td class="c code-4xx">404</td><td>El pozo no tiene mediciones.</td></tr>
+                <tr><td class="c code-5xx">503</td><td>Autorización no disponible.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="two">
+            <div class="code">
+              <div class="bar"><span>Request</span><button class="copy" type="button" id="copy-live-well">Copiar</button></div>
+<pre id="pre-copy-live-well">curl 'https://&lt;API_BASE_URL&gt;/v1/equipment/020032/live/1' \
+  -H 'Authorization: Bearer &lt;ACCESS_TOKEN&gt;'</pre>
+            </div>
+            <div class="code">
+              <div class="bar"><span>Respuesta 200</span></div>
+<pre>{
+  <span class="k">"serial"</span>: <span class="s">"020032"</span>,
+  <span class="k">"well"</span>: {
+    <span class="k">"number"</span>: <span class="n">1</span>,
+    <span class="k">"topics"</span>: {
+      <span class="k">"ACT_TIME_PUMP"</span>: {
+        <span class="k">"value"</span>: <span class="n">0</span>,
+        <span class="k">"timeStamp"</span>: <span class="s">"2026-10-06T13:48:12.540Z"</span>
+      }
+    }
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- GET /v1/equipment/{serial}/well/{wellNumber}/topics/{topicKey}/history -->
+      <details class="ep" id="ep-history" open>
+        <summary>
+          <span class="method">GET</span>
+          <span class="path">/v1/equipment/<i>{serial}</i>/well/<i>{wellNumber}</i>/topics/<i>{topicKey}</i>/history</span>
+          <span class="chev" aria-hidden="true">▼</span>
+          <p class="sum">Histórico paginado de un tópico de un pozo, del más nuevo al más viejo.</p>
+        </summary>
+        <div class="body">
+          <div class="callout">
+            <strong>Alcance del token</strong>
+            <p>Devuelve solo los tramos de <code>[from, to]</code> en los que el pozo estaba en un servicio de las cuentas del token. El servicio no necesita estar activo hoy: el histórico de un contrato terminado se puede leer para el período que cubrió. El campo <code>ranges</code> indica qué tramos se leyeron.</p>
+          </div>
+          <div>
+            <h3>Comportamiento</h3>
+            <ul>
+              <li>Mediciones ordenadas por <code>timeStamp</code> descendente, una por instante.</li>
+              <li>Valores crudos, tal como los reporta el equipo (sin multiplicador ni unidad).</li>
+              <li><code>total</code> cuenta las mediciones de todos los tramos, no solo de la página.</li>
+              <li>Paginación por número de página. Rangos muy amplios y páginas muy profundas responden más lento.</li>
+            </ul>
+          </div>
+          <div class="callout warn">
+            <strong>A definir con YPF</strong>
+            <p>El rango máximo de fechas y los límites de paginación. Hoy <code>limit</code> va de 1 a 1000 y no hay tope de rango.</p>
+          </div>
+          <div>
+            <h3>Parámetros</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c">serial</td><td>path</td><td class="c">string</td><td>Obligatorio. No vacío, máximo 50 caracteres.</td></tr>
+                <tr><td class="c">wellNumber</td><td>path</td><td class="c">integer ≥ 0</td><td>Solo dígitos.</td></tr>
+                <tr><td class="c">topicKey</td><td>path</td><td class="c">string</td><td>Clave del tópico, por ejemplo <code>LWOT</code>. Máximo 50 caracteres.</td></tr>
+                <tr><td class="c">from</td><td>query</td><td class="c">date-time</td><td>Obligatorio. ISO 8601 estricto. Usar <code>Z</code> (UTC); un offset <code>+hh:mm</code> debe ir codificado como <code>%2B</code>.</td></tr>
+                <tr><td class="c">to</td><td>query</td><td class="c">date-time</td><td>Obligatorio. ISO 8601 estricto, no anterior a <code>from</code>.</td></tr>
+                <tr><td class="c">page</td><td>query</td><td class="c">integer ≥ 1</td><td>Opcional, por defecto <code>1</code>.</td></tr>
+                <tr><td class="c">limit</td><td>query</td><td class="c">integer 1–1000</td><td>Opcional, por defecto <code>100</code>.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div>
+            <h3>Respuestas</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>HTTP</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c code-2xx">200</td><td>Una página de mediciones y los tramos leídos.</td></tr>
+                <tr><td class="c code-4xx">400</td><td>Parámetros de ruta inválidos, <code>from</code>/<code>to</code> ausentes o fuera de ISO 8601, <code>from</code> posterior a <code>to</code>, <code>page</code> &lt; 1 o <code>limit</code> fuera de 1–1000.</td></tr>
+                <tr><td class="c code-4xx">401</td><td>Token ausente o inválido.</td></tr>
+                <tr><td class="c code-4xx">403</td><td>Falta <code>DEVICE_READ</code>, o ningún servicio de las cuentas del token se superpone con <code>[from, to]</code>.</td></tr>
+                <tr><td class="c code-4xx">404</td><td>Hay servicios en el rango, pero ninguno incluye ese pozo.</td></tr>
+                <tr><td class="c code-5xx">503</td><td>Autorización no disponible.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="two">
+            <div class="code">
+              <div class="bar"><span>Request</span><button class="copy" type="button" id="copy-history">Copiar</button></div>
+<pre id="pre-copy-history">curl 'https://&lt;API_BASE_URL&gt;/v1/equipment/20005/well/1/topics/LWOT/history?from=2026-08-17T00:00:00Z&amp;to=2026-08-22T00:00:00Z&amp;page=1&amp;limit=100' \
+  -H 'Authorization: Bearer &lt;ACCESS_TOKEN&gt;'</pre>
+            </div>
+            <div class="code">
+              <div class="bar"><span>Respuesta 200</span></div>
+<pre>{
+  <span class="k">"serial"</span>: <span class="s">"20005"</span>,
+  <span class="k">"well"</span>: <span class="n">1</span>,
+  <span class="k">"topic"</span>: <span class="s">"LWOT"</span>,
+  <span class="k">"from"</span>: <span class="s">"2026-08-17T00:00:00.000Z"</span>,
+  <span class="k">"to"</span>: <span class="s">"2026-08-22T00:00:00.000Z"</span>,
+  <span class="k">"ranges"</span>: [
+    { <span class="k">"from"</span>: <span class="s">"2026-08-17T00:00:00.000Z"</span>, <span class="k">"to"</span>: <span class="s">"2026-08-18T00:00:00.000Z"</span> },
+    { <span class="k">"from"</span>: <span class="s">"2026-08-21T00:00:00.000Z"</span>, <span class="k">"to"</span>: <span class="s">"2026-08-22T00:00:00.000Z"</span> }
+  ],
+  <span class="k">"page"</span>: <span class="n">1</span>,
+  <span class="k">"limit"</span>: <span class="n">100</span>,
+  <span class="k">"total"</span>: <span class="n">17277</span>,
+  <span class="k">"totalPages"</span>: <span class="n">173</span>,
+  <span class="k">"measures"</span>: [
+    { <span class="k">"value"</span>: <span class="n">42</span>, <span class="k">"timeStamp"</span>: <span class="s">"2026-08-21T23:59:55.000Z"</span> },
+    { <span class="k">"value"</span>: <span class="n">41</span>, <span class="k">"timeStamp"</span>: <span class="s">"2026-08-21T23:59:50.000Z"</span> }
+  ]
+}</pre>
+            </div>
+          </div>
+          <p class="lede">En el ejemplo, el rango pedido cruza un hueco entre dos contratos (uno termina el 18/08 y el siguiente empieza el 21/08), así que se leen dos tramos.</p>
+        </div>
+      </details>
+
+      <!-- GET /v1/equipment/{serial}/wells/{wellNumbers}/sanding-events -->
+      <details class="ep" id="ep-sanding" open>
+        <summary>
+          <span class="method">GET</span>
+          <span class="path">/v1/equipment/<i>{serial}</i>/wells/<i>{wellNumbers}</i>/sanding-events</span>
+          <span class="chev" aria-hidden="true">▼</span>
+          <p class="sum">Eventos de desarenado de uno o más pozos en un período, del más nuevo al más viejo.</p>
+        </summary>
+        <div class="body">
+          <div class="callout">
+            <strong>Alcance del token</strong>
+            <p>Misma regla que el histórico, aplicada <b>por pozo</b>: cada pozo devuelve solo los eventos de los tramos en que estaba en un servicio de las cuentas del token. Un pozo nunca muestra eventos de fuera de sus propios contratos.</p>
+          </div>
+          <div>
+            <h3>Comportamiento</h3>
+            <ul>
+              <li>Varios pozos en un solo request: <code>1,2,3</code>. Se ordenan y se eliminan repetidos.</li>
+              <li>Devuelve un elemento por pozo pedido, en orden ascendente, aunque no tenga eventos (<code>eventCount: 0</code>).</li>
+              <li>Sin paginación: se devuelven todos los eventos de los tramos contratados.</li>
+              <li><code>drainWeight</code> es el valor crudo del equipo (libras × 10), o <code>null</code> si no se informó.</li>
+              <li><code>insertType</code> es <code>"MANUAL"</code> para eventos cargados a mano y <code>null</code> para los automáticos.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Parámetros</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>Nombre</th><th>En</th><th>Tipo</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c">serial</td><td>path</td><td class="c">string</td><td>Obligatorio. No vacío, máximo 50 caracteres.</td></tr>
+                <tr><td class="c">wellNumbers</td><td>path</td><td class="c">string</td><td>Pozos separados por coma, solo dígitos, sin espacios ni elementos vacíos. Se rechazan <code>1,,2</code>, <code>1,</code> y <code>1, 2</code>.</td></tr>
+                <tr><td class="c">from</td><td>query</td><td class="c">date-time</td><td>Obligatorio. ISO 8601 estricto, preferentemente en UTC (<code>Z</code>).</td></tr>
+                <tr><td class="c">to</td><td>query</td><td class="c">date-time</td><td>Obligatorio. ISO 8601 estricto, no anterior a <code>from</code>.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div>
+            <h3>Respuestas</h3>
+            <div class="tbl"><table>
+              <thead><tr><th>HTTP</th><th>Descripción</th></tr></thead>
+              <tbody>
+                <tr><td class="c code-2xx">200</td><td>Eventos por pozo y tramos leídos.</td></tr>
+                <tr><td class="c code-4xx">400</td><td><code>serial</code> o lista de pozos inválidos, <code>from</code>/<code>to</code> ausentes o fuera de ISO 8601, o <code>from</code> posterior a <code>to</code>.</td></tr>
+                <tr><td class="c code-4xx">401</td><td>Token ausente o inválido.</td></tr>
+                <tr><td class="c code-4xx">403</td><td>Falta <code>DEVICE_READ</code>, o ningún servicio de las cuentas del token se superpone con <code>[from, to]</code>.</td></tr>
+                <tr><td class="c code-4xx">404</td><td>Algún pozo pedido no está en ningún servicio del rango. El mensaje indica cuáles.</td></tr>
+                <tr><td class="c code-5xx">503</td><td>Autorización o servicio de eventos no disponible.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="two">
+            <div class="code">
+              <div class="bar"><span>Request</span><button class="copy" type="button" id="copy-sanding">Copiar</button></div>
+<pre id="pre-copy-sanding">curl 'https://&lt;API_BASE_URL&gt;/v1/equipment/020250/wells/1,2,3/sanding-events?from=2026-02-24T00:00:00Z&amp;to=2026-02-24T07:00:00Z' \
+  -H 'Authorization: Bearer &lt;ACCESS_TOKEN&gt;'</pre>
+            </div>
+            <div class="code">
+              <div class="bar"><span>Respuesta 200</span></div>
+<pre>{
+  <span class="k">"serial"</span>: <span class="s">"020250"</span>,
+  <span class="k">"from"</span>: <span class="s">"2026-02-24T00:00:00.000Z"</span>,
+  <span class="k">"to"</span>: <span class="s">"2026-02-24T07:00:00.000Z"</span>,
+  <span class="k">"wells"</span>: [
+    {
+      <span class="k">"well"</span>: <span class="n">1</span>,
+      <span class="k">"ranges"</span>: [
+        { <span class="k">"from"</span>: <span class="s">"2026-02-24T00:00:00.000Z"</span>, <span class="k">"to"</span>: <span class="s">"2026-02-24T07:00:00.000Z"</span> }
+      ],
+      <span class="k">"eventCount"</span>: <span class="n">2</span>,
+      <span class="k">"events"</span>: [
+        { <span class="k">"time"</span>: <span class="s">"2026-02-24T05:41:10.000Z"</span>, <span class="k">"drainWeight"</span>: <span class="n">34</span>, <span class="k">"insertType"</span>: <span class="n">null</span> },
+        { <span class="k">"time"</span>: <span class="s">"2026-02-24T01:12:40.000Z"</span>, <span class="k">"drainWeight"</span>: <span class="n">29</span>, <span class="k">"insertType"</span>: <span class="s">"MANUAL"</span> }
+      ]
+    },
+    {
+      <span class="k">"well"</span>: <span class="n">2</span>,
+      <span class="k">"ranges"</span>: [
+        { <span class="k">"from"</span>: <span class="s">"2026-02-24T00:00:00.000Z"</span>, <span class="k">"to"</span>: <span class="s">"2026-02-24T07:00:00.000Z"</span> }
+      ],
+      <span class="k">"eventCount"</span>: <span class="n">0</span>,
+      <span class="k">"events"</span>: []
+    }
+  ]
+}</pre>
+            </div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="block" id="rangos">
+      <h2>Rangos contratados</h2>
+      <p>El histórico y los desarenados reciben un rango <code>[from, to]</code> y lo recortan a los períodos en que el pozo estuvo en un servicio de las cuentas del token. Solo cuentan los servicios que incluyen ese pozo.</p>
+      <div class="rules">
+        <div class="rule"><h3>Superposición parcial</h3><p>Si el rango cubre solo una parte de un contrato, se devuelve esa parte.</p></div>
+        <div class="rule"><h3>Huecos entre contratos</h3><p>Si el rango cruza un período sin contrato, se devuelven los tramos de cada lado. Los tramos que se tocan se unen en uno.</p></div>
+        <div class="rule"><h3>Campo <code>ranges</code></h3><p>Lista los tramos efectivamente leídos, con ambos extremos incluidos. Si no hay ninguno, la respuesta es <code>403</code>.</p></div>
+      </div>
+    </section>
+
+
+    <footer>Referencia generada a partir del código del servicio (rama <code>develop</code>, octubre 2026). La especificación OpenAPI interactiva está en <code>/docs</code> de cada entorno.</footer>
+  </main>
+</div>
+
+<script>
+document.querySelectorAll('.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = document.getElementById('pre-' + btn.id);
+    if (!pre) return;
+    var text = pre.textContent;
+    var done = function () { btn.textContent = 'Copiado'; setTimeout(function () { btn.textContent = 'Copiar'; }, 1500); };
+    var fallback = function () {
+      var range = document.createRange(); range.selectNodeContents(pre);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      btn.textContent = 'Seleccionado';
+      setTimeout(function () { btn.textContent = 'Copiar'; }, 1500);
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    } catch (e) { fallback(); }
+  });
+});
+</script>
+
+</body></html>

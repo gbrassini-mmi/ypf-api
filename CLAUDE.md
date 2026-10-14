@@ -144,6 +144,7 @@ Nombres tentativos; ajustar al implementar. Los secretos van en AWS Secrets Mana
 ## Documentación relacionada
 
 - Diseño de la API, seguridad y documentación (material para YPF): [`docs/API-DESIGN.md`](docs/API-DESIGN.md)
+- Referencia v1 de la API (documento compartido con YPF, generado desde el código): [`docs/referencia-api-v1.html`](docs/referencia-api-v1.html)
 - Minutas de reuniones con YPF: [`docs/MINUTAS.md`](docs/MINUTAS.md)
 - Temario de la reunión del 2026-09-30 (artifact): https://claude.ai/artifact/6DYk4vtyypcyad7fBgCvRJ
 - Historial de sesiones: [`docs/HISTORY.md`](docs/HISTORY.md)
