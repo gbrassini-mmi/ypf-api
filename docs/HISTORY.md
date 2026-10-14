@@ -38,3 +38,7 @@ Formato de cada entrada:
 - Se armó el temario de la reunión del 2026-10-14: https://claude.ai/artifact/UGzmtE5ieRrVbVeXph5EYd
 - Se guardó la referencia v1 de la API que se comparte con YPF en `docs/referencia-api-v1.html`.
 - Se registró la reunión en `docs/MINUTAS.md` y se actualizaron los pendientes: resueltos los que ya se cerraron, agregados los que debe YPF y las diferencias entre el diseño documentado y la implementación.
+
+## 2026-10-14 -- Revisión del pliego técnico de YPF
+
+- Se revisó la disponibilidad de datos que pide el pliego técnico de desarenado (CPP N° 10925-26; p. 14 y menciones en pp. 6–7, 15, 18) contra el alcance de la API. Las brechas quedaron en `docs/PENDANTS.md`.

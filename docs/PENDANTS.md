@@ -27,6 +27,11 @@
 - [ ] (2026-10-14) La referencia v1 no incluye alarmas (activas/históricas) ni totalizadores, que están en el alcance original: confirmar estado.
 - [ ] (2026-10-14) Sincronizar `CLAUDE.md`, `docs/API-DESIGN.md` y `docs/DECISIONS.md` con la implementación real que describe `docs/referencia-api-v1.html`: equipos por `serial`, visibilidad por cuentas/subcuentas con servicio activo (no la tabla `api_client_equipment`), `403` (no `404`) para equipos no visibles, scope `msuite/read` y permiso `DEVICE_READ`, rutas `well/{n}` vs `wells/{n,...}`, histórico paginado por página.
 
+- [ ] (2026-10-14) Pliego técnico YPF (CPP N° 10925-26, p. 14) pide "historización de todas las variables" y que "estén también en el sistema de telemetría de YPF". El diseño expone solo las que YPF selecciona: pedir a YPF confirmación por escrito de que el subconjunto es decisión suya y dejar claro que cualquier variable se habilita sin desarrollo.
+- [ ] (2026-10-14) Pliego p. 18: las horas standby se validan con la telemetría de YPF (fin de STB = puesta en marcha). Asegurar que la selección de YPF incluya una variable de estado operativo / puesta en marcha.
+- [ ] (2026-10-14) Pliego p. 14: medición continua de eficiencia del desarenador y cuantificación de arena. Verificar qué variable o cálculo lo representa (los desarenados ya exponen `drainWeight`, crudo en libras × 10).
+- [ ] (2026-10-14) Pliego p. 14 y pp. 6–7: cierre remoto de pozo y purga a distancia "desde sala de control". Confirmar que se refiere a la sala de control del contratista y no a la de YPF: la API es solo lectura.
+- [ ] (2026-10-14) Pliego p. 15: videocámara con grabación continua, "la difusión queda bajo responsabilidad de YPF". Sumar este punto al pendiente de cámaras (Santiago).
 
 ## Resueltos
 
