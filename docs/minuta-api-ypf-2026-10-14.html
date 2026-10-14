@@ -1,0 +1,255 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}</style></head><body>
+<title>Minuta API YPF 14/10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: una columna de lectura (~760px), secciones separadas por reglas finas; el flujo de seguridad es la única pieza visual. */
+:root {
+  --bg: #f3f4f2;
+  --surface: #ffffff;
+  --fg: #1c2124;
+  --muted: #5b6468;
+  --line: #d6dad8;
+  --accent: #0f6e78;
+  --accent-soft: #e0eeef;
+  --ok: #2f7a3e;
+  --ok-soft: #e3f1e5;
+  --warn: #9a6700;
+  --warn-soft: #f7edd6;
+  --info: #475569;
+  --info-soft: #e8ebef;
+  --f-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14191b; --surface: #1b2124; --fg: #e4e8e7; --muted: #9aa4a7; --line: #2d3538;
+    --accent: #5cc3cc; --accent-soft: #173236; --ok: #7dcb8b; --ok-soft: #1a2e1f;
+    --warn: #e6b450; --warn-soft: #33290f; --info: #aab4c2; --info-soft: #232a31;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14191b; --surface: #1b2124; --fg: #e4e8e7; --muted: #9aa4a7; --line: #2d3538;
+  --accent: #5cc3cc; --accent-soft: #173236; --ok: #7dcb8b; --ok-soft: #1a2e1f;
+  --warn: #e6b450; --warn-soft: #33290f; --info: #aab4c2; --info-soft: #232a31;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.6 var(--f-body); padding: 0 16px; }
+main { max-width: 760px; margin: 0 auto; padding-block: 40px 64px; display: grid; gap: 36px; }
+h1, h2 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: .01em; }
+h1 { font-size: 2.6rem; line-height: 1.05; }
+h2 { font-size: 1.45rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+p { margin: 0; }
+.eyebrow { font: 500 .78rem var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 10px; border-bottom: 2px solid var(--fg); padding-bottom: 18px; }
+header .lede { color: var(--muted); max-width: 62ch; }
+section { display: grid; gap: 14px; }
+.note { color: var(--muted); font-size: .9rem; }
+
+/* Estado de tareas */
+.tasks { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.task { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.task > div { min-width: 0; }
+.task strong { font-weight: 600; }
+.task .who { font: .8rem var(--f-mono); color: var(--muted); }
+.task .detail { grid-column: 1 / -1; color: var(--muted); font-size: .92rem; }
+.pill { font: 500 .72rem var(--f-mono); text-transform: uppercase; letter-spacing: .05em; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+.pill.info { background: var(--info-soft); color: var(--info); }
+
+/* Cronograma */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.timeline li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 16px; padding: 10px 0; border-left: 2px solid var(--line); padding-left: 16px; position: relative; }
+.timeline li::before { content: ""; position: absolute; left: -6px; top: 17px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--muted); }
+.timeline li.now::before { background: var(--accent); border-color: var(--accent); }
+.timeline li.goal::before { background: var(--fg); border-color: var(--fg); }
+.timeline .date { font: 500 .85rem var(--f-mono); color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 1px; }
+.timeline li.now .date, .timeline li.goal .date { color: var(--fg); }
+.timeline li > div { min-width: 0; }
+
+/* Flujo de acceso */
+.flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; flex: 1 1 130px; min-width: 0; display: grid; gap: 2px; }
+.step b { font-family: var(--f-display); font-weight: 600; font-size: 1.05rem; letter-spacing: .02em; }
+.step span { font-size: .82rem; color: var(--muted); }
+.step.edge { border-color: var(--accent); background: var(--accent-soft); }
+.arrow { align-self: center; color: var(--muted); font-family: var(--f-mono); }
+
+/* Listas de dos columnas */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px 28px; }
+.grid2 > div { min-width: 0; }
+ul.clean { margin: 0; padding-left: 1.1rem; display: grid; gap: 6px; }
+code { font: .86rem var(--f-mono); background: var(--accent-soft); color: var(--fg); padding: 1px 5px; border-radius: 4px; }
+.endpoints { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+.endpoints table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+.endpoints td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.endpoints tr:last-child td { border-bottom: 0; }
+.endpoints td:first-child { font: .82rem var(--f-mono); white-space: nowrap; color: var(--accent); }
+
+/* Temas a definir */
+.asks { counter-reset: q; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.ask { display: grid; grid-template-columns: 2rem 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.ask::before { counter-increment: q; content: counter(q); font: 600 1.3rem var(--f-display); color: var(--accent); }
+.ask > div { min-width: 0; display: grid; gap: 2px; }
+.ask p { color: var(--muted); font-size: .92rem; }
+
+.scope { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 6px 6px 0; display: grid; gap: 6px; }
+.scope p { font-size: .94rem; }
+
+@media (max-width: 520px) {
+  h1 { font-size: 2.1rem; }
+  .timeline li { grid-template-columns: 1fr; gap: 2px; }
+  .arrow { display: none; }
+}
+
+.pill.done { background: var(--ok-soft); color: var(--ok); }
+.timeline li.done::before { background: var(--ok); border-color: var(--ok); }
+.eps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.eps li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 10px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.eps li > div { min-width: 0; display: grid; gap: 2px; }
+.eps .p { font: .85rem var(--f-mono); color: var(--accent); overflow-wrap: anywhere; }
+.eps .d { color: var(--muted); font-size: .92rem; }
+.ask.block-sb { }
+.ask .tag { font: 500 .72rem var(--f-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--warn); }
+
+/* Notas de la reunión */
+.notes { display: grid; gap: 8px; background: var(--surface); border: 1px dashed var(--line); border-radius: 6px; padding: 12px 14px; }
+.notes-h { font: 500 .72rem var(--f-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.notes-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.notes-list:empty { display: none; }
+.note-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px 10px; align-items: start; padding: 8px 10px; background: var(--bg); border-radius: 4px; }
+.note-item p { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .94rem; }
+.note-item.done p { text-decoration: line-through; color: var(--muted); }
+.note-meta { grid-column: 2 / 3; font: .72rem var(--f-mono); color: var(--muted); }
+.note-item input[type=checkbox] { margin-top: 5px; accent-color: var(--accent); }
+.note-del { background: none; border: 0; color: var(--muted); cursor: pointer; font: .8rem var(--f-mono); padding: 2px 4px; border-radius: 3px; }
+.note-del:hover, .note-del:focus-visible { color: var(--warn); outline: 1px solid var(--line); }
+.note-form { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; }
+.note-form textarea { flex: 1 1 240px; min-width: 0; min-height: 2.6rem; resize: vertical; font: .94rem/1.45 var(--f-body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 7px 9px; }
+.note-form textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.note-form button { font: 500 .8rem var(--f-mono); text-transform: uppercase; letter-spacing: .05em; background: var(--accent); color: var(--surface); border: 0; border-radius: 4px; padding: 9px 14px; cursor: pointer; }
+.note-form button:disabled { opacity: .5; cursor: default; }
+.note-form button:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.notes-off { font-size: .88rem; color: var(--muted); }
+
+.mins { display: grid; gap: 6px; background: var(--accent-soft); border-radius: 6px; padding: 12px 16px; }
+.mins-h { font: 500 .72rem var(--f-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.mins ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 4px; font-size: .94rem; }
+</style>
+
+<main>
+  <header>
+    <div class="eyebrow">Minuta · 14 oct 2026 · MMA ↔ YPF</div>
+    <h1>API de consumo de datos de desarenadores</h1>
+    <p class="lede">Lo que se repasó en la reunión de seguimiento del 14/10, con los comentarios y acuerdos de cada sección. Próximos hitos: sandbox y URL productiva el 21/10, prueba funcional el 23/10.</p>
+  </header>
+
+  <section>
+    <h2>Estado de las tareas</h2>
+    <div class="tasks">
+      <div class="task">
+        <div><strong>Listado de variables, alertas y alarmas</strong> <span class="who">· MMA</span></div>
+        <span class="pill done">Enviado 30/09</span>
+        <div class="detail">Mapa Modbus del equipo y detalle de alertas y alarmas, compartidos el 30/09.</div>
+      </div>
+      <div class="task">
+        <div><strong>Selección final de variables y alarmas</strong> <span class="who">· YPF</span></div>
+        <span class="pill ok">En principio, todas</span>
+        <div class="detail">No bloquea el desarrollo, pero la necesitamos pronto para cerrarlo: hoy el dato en vivo devuelve todos los tópicos en valor crudo. Con la lista aplicamos el filtro de lo que reciben.</div>
+      </div>
+      <div class="task">
+        <div><strong>Documentación de la API</strong> <span class="who">· MMA</span></div>
+        <span class="pill done">Presentada 14/10</span>
+        <div class="detail">Referencia v1 en formato documento: autenticación, visibilidad de equipos, errores, endpoints con ejemplos. El Swagger interactivo se entrega junto con el sandbox.</div>
+      </div>
+      <div class="task">
+        <div><strong>Ciberseguridad e instrucciones de conexión</strong> <span class="who">· MMA → YPF</span></div>
+        <span class="pill warn">Esperando comentarios</span>
+        <div class="detail">Enviado el 07/10. Resta la revisión de YPF. Las dudas se pueden resolver hoy o en una reunión aparte con los desarrolladores.</div>
+      </div>
+      <div class="task">
+        <div><strong>Ambiente sandbox</strong> <span class="who">· MMA</span></div>
+        <span class="pill info">Miércoles 21/10</span>
+        <div class="detail">Sandbox con credenciales y Swagger, para que YPF integre antes de la prueba funcional.</div>
+      </div>
+      <div class="task">
+        <div><strong>Acceso a cámaras</strong> <span class="who">· Santiago</span></div>
+        <span class="pill warn">Definir en breve</span>
+        <div class="detail">Ya se comunicó a los responsables del acceso. Sigue fuera del alcance de esta API.</div>
+      </div>
+    </div>
+  
+    <div class="mins">
+      <div class="mins-h">Comentarios de la reunión</div>
+      <ul><li>El acceso a cámaras pasa a ser relevante para YPF. Se necesitan definiciones en breve.</li></ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Plan y tiempos</h2>
+    <ol class="timeline">
+      <li class="done"><span class="date">30 sep</span><div>Envío del mapa Modbus y del detalle de alarmas.</div></li>
+      <li class="done"><span class="date">1 oct</span><div>Inicio del desarrollo.</div></li>
+      <li class="done"><span class="date">7 oct</span><div>Envío de la documentación de seguridad y de las instrucciones de conexión.</div></li>
+      <li class="done"><span class="date">14 oct</span><div>Presentación de la documentación de referencia de la API.</div></li>
+      <li><span class="date">21 oct · mié</span><div>Sandbox disponible: credenciales, URL base y Swagger. También se entrega la URL productiva.</div></li>
+      <li class="goal"><span class="date">23 oct</span><div><strong>Prueba funcional</strong> de conexión y consumo.</div></li>
+    </ol>
+  
+    <div class="mins">
+      <div class="mins-h">Comentarios de la reunión</div>
+      <ul><li>Junto con el sandbox (21/10) se entrega también la <strong>URL productiva</strong>, para que YPF gestione los accesos de su lado.</li></ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Qué muestra la referencia v1</h2>
+    <p>Todas las rutas son <strong>GET</strong>, de solo lectura, en JSON, con fechas ISO 8601 en UTC. Cada request lleva un access token OAuth2 de Cognito (<code>client_credentials</code>, vigencia de 60 minutos).</p>
+    <ul class="eps">
+      <li><div><span class="p">/v1/equipment</span><span class="d">Equipos asignados a YPF con servicio activo</span></div></li>
+      <li><div><span class="p">/v1/equipment/{serial}</span><span class="d">Detalle del equipo y sus pozos activos</span></div></li>
+      <li><div><span class="p">…/{serial}/live · /live/{pozo}</span><span class="d">Último valor de cada tópico, por equipo o por pozo</span></div></li>
+      <li><div><span class="p">…/well/{pozo}/topics/{tópico}/history</span><span class="d">Histórico paginado de un tópico</span></div></li>
+      <li><div><span class="p">…/wells/{pozos}/sanding-events</span><span class="d">Eventos de desarenado de uno o más pozos</span></div></li>
+    </ul>
+    <p class="note">El histórico y los desarenados devuelven solo los tramos del período en que el equipo estuvo contratado por YPF.</p>
+  
+  </section>
+
+  <section>
+    <h2>Pendientes de YPF</h2>
+    <p class="note">Las tres primeras se necesitan antes del 21/10 para habilitar el sandbox.</p>
+    <div class="asks">
+      <div class="ask"><div><span class="tag">Al recibir las URLs</span><strong>IPs de salida</strong><p>Rangos desde los que van a consumir la API. Sin ellos no podemos habilitar el acceso.</p></div></div>
+      <div class="ask"><div><span class="tag">Antes del 21/10</span><strong>Entrega y rotación de credenciales</strong><p>Canal seguro para recibir el client secret y política de rotación que debamos respetar.</p></div></div>
+      <div class="ask"><div><span class="tag">Antes del 21/10</span><strong>Frecuencia esperada de consumo</strong><p>Cada cuánto van a consultar el dato en vivo y el histórico. Con eso fijamos los límites de tasa.</p></div></div>
+      <div class="ask"><div><strong>Selección final de variables y alarmas</strong><p>Para filtrar lo que devuelve la API y cerrar el desarrollo.</p></div></div>
+      <div class="ask"><div><strong>Comentarios de ciberseguridad</strong><p>Sobre la documentación enviada el 07/10. Si hace falta, coordinamos una reunión con los desarrolladores.</p></div></div>
+    </div>
+  
+    <div class="mins">
+      <div class="mins-h">Comentarios de la reunión</div>
+      <ul><li><strong>IPs de salida:</strong> YPF las informa una vez que reciba las URLs del servicio.</li><li><strong>Entrega y rotación de credenciales:</strong> a confirmar por YPF.</li><li><strong>Variables y alarmas:</strong> en principio, la totalidad.</li><li><strong>Frecuencia esperada de consumo:</strong> sigue pendiente.</li></ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Confirmaciones sobre el pliego</h2>
+    <p class="note">Cómo cubre la API dos puntos del pliego técnico. Pedimos que nos confirmen que están de acuerdo.</p>
+    <div class="asks">
+      <div class="ask"><div><strong>Variables expuestas</strong><p>El pliego (p. 14) prevé la exposición de todas las variables. A pedido de YPF, esta API comparte solo el listado de variables que ustedes nos indiquen.</p></div></div>
+      <div class="ask"><div><strong>Eficiencia del desarenador</strong><p>Les enviamos los totalizadores calculados por nosotros. La API también expone los datos de origen, para que puedan reconstruirlos si guardan la información de su lado.</p></div></div>
+    </div>
+    <div class="mins">
+      <div class="mins-h">Comentarios de la reunión</div>
+      <ul><li><strong>Variables expuestas:</strong> YPF indicó que serían la totalidad de variables y alarmas.</li><li><strong>Eficiencia del desarenador:</strong> sin comentarios.</li></ul>
+    </div>
+  </section>
+
+</main>
+</body></html>

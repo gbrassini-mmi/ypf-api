@@ -33,6 +33,7 @@ Temario preparado: https://claude.ai/artifact/6DYk4vtyypcyad7fBgCvRJ (estado de 
 ## 2026-10-14 -- Reunión de seguimiento
 
 Temario: https://claude.ai/artifact/UGzmtE5ieRrVbVeXph5EYd
+Minuta enviada a YPF (HTML): `docs/minuta-api-ypf-2026-10-14.html`
 
 **Estado al inicio de la reunión:**
 - Listado de variables, alarmas y alertas: enviado a YPF el 2026-09-30. Falta la selección final de YPF. No bloquea, pero se necesita pronto para cerrar el desarrollo.
